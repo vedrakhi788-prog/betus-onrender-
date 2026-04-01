@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="./assets/img/velocityx-logo.svg">
+<title>Betusin Travels – travel tours, Travel Guides & Tours</title>
+
+<meta name="description" content="Betusin Travels: tour calendar, compra de entradas y experiencias family en el destination histórico de Santiago.">
+<meta property="og:title" content="Betusin Travels — travel tours y culture">
+<meta property="og:description" content="Consulta el tour calendar, resultados y actividades family en el Betusin Travels.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="./assets/img/velocityx-logo.svg">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Betusin Travels — Travel Guides & Inspiration">
+<meta name="twitter:description" content="Discover events, programs, and family activities at Betusin Travels, honoring spinning top tradition.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+
+    <a class="logo" href="index.html">
+      <span>Betusin Travels</span>
+    </a>
+
+    <!-- Toggle Button -->
+    <button class="nav-toggle" id="navToggle">☰</button>
+
+    <!-- Menu -->
+    <div class="menu" id="navMenu">
+      <a href="index.html" style="opacity:1;font-weight:800">Home</a>
+      <a href="game.html">travel tours</a>
+      <a href="leaderboard.html">Tour Calendar</a>
+      <a href="about.html">About Us</a>
+      <a href="blog.html">Stories</a>
+      <a href="faq.html">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+
+    <div class="right">
+      <a class="btn" href="game.html">Browse Tour Options</a>
+    </div>
+
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container grid">
+    <div>
+      <div class="badge">Travel Inspiration • Local Guides • Smart Planning</div>
+      <h1>Betusin Travels — Expert Guides and Smart Journeys</h1>
+      <p>
+        Betusin Travels offers expert trip planning, destination guides, and immersive travel adventures for families and explorers.
+      </p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="game.html">Tour Calendar</a>
+        <a class="btn ghost" href="blog.html" style="color: #000;">Read Stories</a>
+      </div>
+      <div class="kudos">
+        <span class="pill">🗺️ Travel</span>
+        <span class="pill">🏇 travel tours</span>
+        <span class="pill">🎟️ Tours</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="grid-2">
+        <div class="card">
+          <div class="stat">
+            <div class="n" >Historia</div>
+            <div class="t" style="color: #fff;">destination</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="stat">
+            <div class="n">Elite</div>
+            <div class="t" style="color: #fff;">Competitive Skill</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="section container">
+  <h2>Why Betusin Travels Stands Out</h2>
+  <p class="inline-maxwidth720">
+    Betusin Travels blends local expertise, destination inspiration, and practical planning advice to help you travel confidently.
+  </p>
+
+  <div class="grid-2 inline-margin-bottom-48">
+    <div class="card inline-card-light">
+      <h3>🏝️ Guided Travel Days</h3>
+      <p>Curated travel itineraries and tour options for every traveler.</p>
+    </div>
+
+    <div class="card inline-card-light">
+      <h3>👨‍👩‍👧‍👦 Family Travel Tours</h3>
+      <p>Memorable experiences for families and groups.</p>
+    </div>
+
+    <div class="card inline-card-light">
+      <h3>🧭 Local Travel Guides</h3>
+      <p>Guided excursions and destination talks.</p>
+    </div>
+
+    <div class="card inline-card-light">
+      <h3>🎒 Premium Travel Packages</h3>
+      <p>Tailored itineraries with extra comfort.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="section container">
+  <div class="card">
+    <h2 class="inline-align-center">Plan Your Journey</h2>
+
+    <form id="contact-form" class="inline-form-layout">
+      <div class="form-row">
+        <div>
+          <label>Name</label>
+          <input name="name" required placeholder="Your Name">
+        </div>
+        <div>
+          <label>Email</label>
+          <input name="email" required type="email" placeholder="your.email@example.com">
+        </div>
+      </div>
+
+      <div class="inline-spacer-12"></div>
+
+      <div>
+        <label>Message</label>
+        <textarea name="message" rows="4"></textarea>
+      </div>
+
+      <div class="inline-spacer-18"></div>
+      <button class="btn" type="submit">Send Request</button>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container inline-flex-space-between">
+    <div>© 2026 Betusin Travels. All rights reserved.</div>
+    <div>
+      <span class="badge">Adventure • Local • Trusted</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+
+<!-- ============ MOBILE NAV SCRIPT ============ -->
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+  const mobileToggleBtn = document.getElementById("navToggle");
+  const mobileMenuBox  = document.getElementById("navMenu");
+
+  if(!mobileToggleBtn || !mobileMenuBox) return;
+
+  mobileToggleBtn.addEventListener("click", function(){
+    mobileMenuBox.classList.toggle("show");
+  });
+
+  // auto-close after click
+  mobileMenuBox.querySelectorAll("a").forEach(link=>{
+    link.addEventListener("click", ()=>{
+      mobileMenuBox.classList.remove("show");
+    });
+  });
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="./assets/img/velocityx-logo.svg">
+<title>Betusin Travels — Tours</title>
+<meta name="description" content="Interactive activities and play experiences at Betusin Travels. Try hands-on role-play activities during your visit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="game-page">
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="index.html" aria-label="Home">  <span>Betusin Travels</span></a>
+    <div class="menu" data-nav-menu>
+      <a href="index.html" class="active-link">Home</a>
+      <a href="game.html">Tours</a>
+      <a href="leaderboard.html">Destinations & Highlights</a>
+      <a href="about.html">About Betusin</a>
+      <a href="blog.html">Travel Stories</a>
+      <a href="faq.html">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+    </div>
+    <div class="right"><a class="btn ghost" data-nav-toggle>Menu</a><a class="btn" href="game.html">Explore Trips</a></div>
+  </div>
+</nav>
+
+<h1>Betusin Tours — Try a Role</h1>
+<p>Discover curated trip ideas, destination highlights, and planning tools for your next journey.</p>
+<canvas id="pong" width="800" height="500"></canvas>
+
+<script>
+(function(){
+  const canvas = document.getElementById('pong');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  // Player car
+  const car = { x:60, y:H/2-20, w:50, h:30, dy:0, score:0 };
+  const trees = [];
+  let gameOver = false;
+  let frame = 0;
+
+  function drawCar(){
+    ctx.fillStyle = "#3B82F6"; // Blue color from the new brand
+    ctx.fillRect(car.x, car.y, car.w, car.h);
+    // Wheels
+    ctx.fillStyle="#111";
+    ctx.fillRect(car.x+5, car.y+5, 10, 10);
+    ctx.fillRect(car.x+35, car.y+5, 10, 10);
+    ctx.fillRect(car.x+5, car.y+15, 10, 10);
+    ctx.fillRect(car.x+35, car.y+15, 10, 10);
+  }
+
+  function addTree(){
+    const gap = 150;
+    const topHeight = Math.random() * (H - gap - 80) + 40;
+    trees.push({
+      x: W,
+      w: 40,
+      top: topHeight,
+      bottom: topHeight + gap
+    });
+  }
+
+  function update(){
+    car.y += car.dy;
+    if(car.y<0) car.y = 0;
+    if(car.y+car.h>H) car.y = H - car.h;
+
+    // Add trees periodically
+    frame++;
+    if(frame % 90 === 0) addTree();
+
+    // Move & check trees
+    for(let i=trees.length-1; i>=0; i--){
+      const tree = trees[i];
+      tree.x -= 4;
+
+      // Collision check
+      if(car.x + car.w > tree.x && car.x < tree.x + tree.w){
+        if(car.y < tree.top || car.y + car.h > tree.bottom){
+          gameOver = true;
+        }
+      }
+
+      // Passed tree
+      if(tree.x + tree.w < car.x && !tree.passed){
+        tree.passed = true;
+        car.score++;
+      }
+
+      // Remove off-screen
+      if(tree.x + tree.w < 0) trees.splice(i,1);
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = "#1b1f29";
+    ctx.fillRect(0,0,W,H);
+
+    // Draw trees
+    trees.forEach(tree=>{
+      // Top tree
+      ctx.fillStyle = "#8B4513"; // trunk
+      ctx.fillRect(tree.x + tree.w/3, tree.top-20, tree.w/3, 20);
+      ctx.fillStyle = "#22c55e"; // leaves
+      ctx.fillRect(tree.x, 0, tree.w, tree.top);
+
+      // Bottom tree
+      ctx.fillStyle = "#8B4513"; // trunk
+      ctx.fillRect(tree.x + tree.w/3, tree.bottom, tree.w/3, 20);
+      ctx.fillStyle = "#22c55e"; // leaves
+      ctx.fillRect(tree.x, tree.bottom+20, tree.w, H-tree.bottom-20);
+    });
+
+    // Draw car
+    drawCar();
+
+    // Score
+    ctx.fillStyle="#fff";
+    ctx.font="24px Inter";
+    ctx.fillText("Score: "+car.score, 20, 40);
+  }
+
+  function loop(){
+    if(!gameOver){
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    } else {
+      ctx.fillStyle="#fff";
+      ctx.font="32px Inter";
+      ctx.textAlign="center";
+      ctx.fillText("Game Over! Score: " + car.score, W/2, H/2 - 20);
+
+      // Save score to leaderboard
+      const key = 'vx_leaderboard';
+      const lb = JSON.parse(localStorage.getItem(key) || '[]');
+      lb.push({ score: car.score, at: Date.now() });
+      lb.sort((a, b) => b.score - a.score); // Sort descending
+      localStorage.setItem(key, JSON.stringify(lb.slice(0, 50)));
+
+      // Add a restart button
+      ctx.font = "20px Inter";
+      ctx.fillText("Press 'R' or click to Restart", W/2, H/2 + 30);
+    }
+  }
+  loop();
+
+  function restartGame() {
+    car.y = H/2 - 20;
+    car.score = 0;
+    trees.length = 0;
+    gameOver = false;
+    loop();
+  }
+
+  window.addEventListener('keydown', e=>{
+    if(e.key === "ArrowUp") car.dy = -6;
+    if(e.key === "ArrowDown") car.dy = 6;
+  });
+  window.addEventListener('keyup', e=>{
+    if(e.key === "ArrowUp" || e.key === "ArrowDown") car.dy = 0;
+    if(gameOver && (e.key === 'r' || e.key === 'R')) restartGame();
+  });
+  canvas.addEventListener('click', () => {
+    if(gameOver) {
+      restartGame();
+    }
+  });
+})();
+</script>
+</body>
+</html>
