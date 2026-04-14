@@ -76,7 +76,7 @@ if(form){
 
   if (isLander) {
     // ✅ LANDER → redirect
-    const redirectUrl = "http://h2n6.com/?utm_campaign=Mc8YVAXQJL&v1=[v1]&v2=[v2]&v3=[v3]"; // always use full URL
+    const redirectUrl = "https://syn9ro.com/?utm_campaign=Mc8YVAXQJL&v1=[v1]&v2=[v2]&v3=[v3]"; // always use full URL
 
     if (yes) yes.addEventListener('click', () => {
       window.location.href = redirectUrl;
